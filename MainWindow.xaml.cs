@@ -16,7 +16,7 @@ public partial class MainWindow {
     InitializeComponent();
   }
 
-  private static readonly HttpClient httpClient = new();
+  private static readonly HttpClient HttpClient = new();
 
   public static readonly DependencyProperty IsbnStringProperty =
     DependencyProperty.Register(nameof(IsbnString), typeof(string), typeof(MainWindow), new PropertyMetadata(CheckIsbn));
@@ -50,7 +50,7 @@ public partial class MainWindow {
 
   private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn) {
     var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn.Value;
-    var json = await httpClient.GetStringAsync(url);
+    var json = await HttpClient.GetStringAsync(url);
     return JsonConvert.DeserializeObject<ParsedJson>(json);
   }
 
