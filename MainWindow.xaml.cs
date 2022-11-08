@@ -1,13 +1,13 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using CsvHelper;
-using Newtonsoft.Json;
 
 namespace IsbnEnter;
 
@@ -53,7 +53,7 @@ public partial class MainWindow {
   private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn) {
     var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn.Value;
     var json = await HttpClient.GetStringAsync(url);
-    return JsonConvert.DeserializeObject<ParsedJson>(json);
+    return JsonSerializer.Deserialize<ParsedJson>(json);
   }
 
   private void WriteCsv(object sender, KeyEventArgs e) {
