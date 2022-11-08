@@ -64,7 +64,7 @@ public partial class MainWindow {
 
     using (var writer = new StreamWriter("records.csv")) {
       using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-      var entry = new CsvEntry { CallNumber = callNumber, ISBN = isbn.Value };
+      var entry = new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value };
       csv.WriteRecords(new List<CsvEntry> { entry });
     }
 
@@ -97,5 +97,5 @@ internal record struct ParsedJson {
 
 internal record struct CsvEntry {
   public int CallNumber { get; init; }
-  public string ISBN { get; init; }
+  public string Isbn { get; init; }
 }
