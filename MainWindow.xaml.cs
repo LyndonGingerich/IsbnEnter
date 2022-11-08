@@ -86,7 +86,7 @@ internal record struct CheckedIsbn {
       return s.AsEnumerable().All(c => validChars.Contains(c)) && (s.Length == 10 || s.Length == 13);
     }
 
-    return (isbn != null && IsFormattedAsIsbn(isbn)) ? new CheckedIsbn(isbn) : null;
+    return IsFormattedAsIsbn(isbn) ? new CheckedIsbn(isbn) : null;
   }
 }
 
