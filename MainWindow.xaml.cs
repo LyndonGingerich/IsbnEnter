@@ -3,7 +3,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -53,7 +53,10 @@ public partial class MainWindow {
   private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn) {
     var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn.Value;
     var json = await HttpClient.GetStringAsync(url);
-    return JsonSerializer.Deserialize<ParsedJson>(json);
+    return
+      JsonNode.Parse(json) is { } node
+        ? new ParsedJson((string)((dynamic)node)["items"][0]["volumeInfo"]["title"])
+        : null;
   }
 
   private void WriteCsv(object sender, KeyEventArgs e) {
@@ -92,8 +95,8 @@ internal record struct CheckedIsbn {
   }
 }
 
-internal record struct ParsedJson {
-  public string Title { get; init; }
+internal record struct ParsedJson(string Title) {
+  public string Title { get; } = Title;
 }
 
 internal record struct CsvEntry {
