@@ -45,7 +45,7 @@ public partial class MainWindow {
     else {
       window.Isbn = null;
       window.TitleText.Text = "";
-    };
+    }
   }
 
   private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn) {
