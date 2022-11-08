@@ -1,6 +1,4 @@
-﻿using CsvHelper;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -8,26 +6,30 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using CsvHelper;
+using Newtonsoft.Json;
 
 namespace IsbnEnter;
 
 public partial class MainWindow {
-  public MainWindow() {
-    InitializeComponent();
-  }
-
   private static readonly HttpClient HttpClient = new();
 
   public static readonly DependencyProperty IsbnStringProperty =
-    DependencyProperty.Register(nameof(IsbnString), typeof(string), typeof(MainWindow), new PropertyMetadata(CheckIsbn));
+    DependencyProperty.Register(
+      nameof(IsbnString), typeof(string), typeof(MainWindow), new PropertyMetadata(CheckIsbn));
+
+  public static readonly DependencyProperty IsbnProperty =
+    DependencyProperty.Register(
+      nameof(Isbn), typeof(CheckedIsbn?), typeof(MainWindow), new PropertyMetadata());
+
+  public MainWindow() {
+    InitializeComponent();
+  }
 
   private string IsbnString {
     get => (string)GetValue(IsbnStringProperty);
     set => SetValue(IsbnStringProperty, value);
   }
-
-  public static readonly DependencyProperty IsbnProperty =
-    DependencyProperty.Register(nameof(Isbn), typeof(CheckedIsbn?), typeof(MainWindow), new PropertyMetadata());
 
   private CheckedIsbn? Isbn {
     get => (CheckedIsbn?)GetValue(IsbnProperty);
@@ -74,11 +76,11 @@ public partial class MainWindow {
 }
 
 internal record struct CheckedIsbn {
-  public string Value { get; }
-
   private CheckedIsbn(string isbn) {
     Value = isbn;
   }
+
+  public string Value { get; }
 
   public static CheckedIsbn? Create(string isbn) {
     bool IsFormattedAsIsbn(string s) {
@@ -99,3 +101,4 @@ internal record struct CsvEntry {
   public int CallNumber { get; init; }
   public string Isbn { get; init; }
 }
+
