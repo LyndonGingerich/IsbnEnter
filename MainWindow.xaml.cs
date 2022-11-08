@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -93,7 +93,6 @@ internal record struct CheckedIsbn {
 }
 
 internal record struct ParsedJson {
-  [JsonProperty("items[0].volumeInfo.title")]
   public string Title { get; init; }
 }
 
