@@ -74,7 +74,7 @@ public partial class MainWindow {
 }
 
 internal record struct CheckedIsbn {
-  public string Value { get; init; }
+  public string Value { get; }
 
   private CheckedIsbn(string isbn) {
     Value = isbn;
