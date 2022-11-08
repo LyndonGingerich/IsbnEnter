@@ -1,4 +1,4 @@
-﻿using CsvHelper;
+using CsvHelper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ public partial class MainWindow : Window {
   private static async void CheckIsbn(DependencyObject d, DependencyPropertyChangedEventArgs e) {
     var window = (MainWindow)d;
     var isbnString = (string)e.NewValue;
-    if (CheckedIsbn.Create(isbnString) is not CheckedIsbn isbn) return;
+    if (CheckedIsbn.Create(isbnString) is not { } isbn) return;
     if (await ParseJson(isbn) is { } parsedJson) {
       window.Isbn = isbn;
       window.TitleText.Text = parsedJson.Title;
