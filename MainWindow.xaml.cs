@@ -1,4 +1,4 @@
-using CsvHelper;
+﻿using CsvHelper;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -52,7 +52,7 @@ public partial class MainWindow : Window {
   private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn) {
     var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn.Value;
     var json = await httpClient.GetStringAsync(url);
-    return json == null ? null : JsonConvert.DeserializeObject<ParsedJson>(json);
+    return JsonConvert.DeserializeObject<ParsedJson>(json);
   }
 
   private void WriteCsv(object sender, KeyEventArgs e) {
