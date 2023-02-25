@@ -77,7 +77,7 @@ public partial class MainWindow {
   }
 }
 
-internal record struct CheckedIsbn {
+internal readonly record struct CheckedIsbn {
   private static readonly char[] ValidChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X' };
 
   private CheckedIsbn(string isbn) {
@@ -92,11 +92,11 @@ internal record struct CheckedIsbn {
   public static CheckedIsbn? Create(string isbn) => IsFormattedAsIsbn(isbn) ? new CheckedIsbn(isbn) : null;
 }
 
-internal record struct ParsedJson(string Title) {
+internal readonly record struct ParsedJson(string Title) {
   public string Title { get; } = Title;
 }
 
-internal record struct CsvEntry {
+internal readonly record struct CsvEntry {
   public int CallNumber { get; init; }
   public string Isbn { get; init; }
 }
