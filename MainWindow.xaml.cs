@@ -103,4 +103,3 @@ internal record struct CsvEntry {
   public int CallNumber { get; init; }
   public string Isbn { get; init; }
 }
-
