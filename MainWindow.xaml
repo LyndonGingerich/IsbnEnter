@@ -8,7 +8,8 @@
         Title="ISBN input"
         Height="450"
         Width="800"
-        Closed="DisposeFileWriters">
+        Closed="DisposeFileWriters"
+        Loaded="FocusIsbnText">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>

@@ -97,6 +97,8 @@ public partial class MainWindow {
     if (e.Key != Key.Enter) return;
     Keyboard.Focus(CallNumberText);
   }
+
+  private void FocusIsbnText(object sender, RoutedEventArgs e) => Keyboard.Focus(IsbnText);
 }
 
 internal readonly record struct CheckedIsbn {
