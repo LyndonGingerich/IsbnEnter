@@ -66,7 +66,10 @@ public partial class MainWindow {
     return new ParsedJson(title);
   }
 
-  private void InitializeCsv() => _csvWriter.WriteHeader<CsvEntry>();
+  private void InitializeCsv() {
+    _csvWriter.WriteHeader<CsvEntry>();
+    _csvWriter.NextRecord();
+  }
 
   private void WriteCsv(object sender, KeyEventArgs e) {
     if (e.Key != Key.Enter) return;
@@ -77,6 +80,7 @@ public partial class MainWindow {
     if (title == "") return;
 
     _csvWriter.WriteRecord(new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value });
+    _csvWriter.NextRecord();
 
     IsbnText.Text = "";
     CallNumberText.Text = "";
