@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -21,8 +22,14 @@ public partial class MainWindow {
     DependencyProperty.Register(
       nameof(Isbn), typeof(CheckedIsbn?), typeof(MainWindow), new PropertyMetadata());
 
+  private readonly CsvWriter _csvWriter;
+
+  private readonly StreamWriter _streamWriter;
+
   public MainWindow() {
     InitializeComponent();
+    _streamWriter = new StreamWriter("records.csv");
+    _csvWriter = new CsvWriter(_streamWriter, CultureInfo.InvariantCulture);
   }
 
   private string IsbnString {
@@ -65,16 +72,17 @@ public partial class MainWindow {
     var title = TitleText.Text;
     if (title == "") return;
 
-    using (var writer = new StreamWriter("records.csv")) {
-      using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
-      var entry = new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value };
-      csv.WriteRecord(entry);
-    }
+    _csvWriter.WriteRecord(new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value });
 
     IsbnText.Text = "";
     CallNumberText.Text = "";
 
     Keyboard.Focus(IsbnText);
+  }
+
+  private void DisposeFileWriters(object? sender, EventArgs e) {
+    _csvWriter.Dispose();
+    _streamWriter.Dispose();
   }
 }
 
