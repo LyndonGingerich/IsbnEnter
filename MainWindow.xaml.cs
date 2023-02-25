@@ -79,20 +79,18 @@ public partial class MainWindow {
 }
 
 internal record struct CheckedIsbn {
+  private static readonly char[] ValidChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X' };
+
   private CheckedIsbn(string isbn) {
     Value = isbn;
   }
 
   public string Value { get; }
 
-  public static CheckedIsbn? Create(string isbn) {
-    bool IsFormattedAsIsbn(string s) {
-      char[] validChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'X' };
-      return s.AsEnumerable().All(c => validChars.Contains(c)) && s.Length is 10 or 13;
-    }
+  private static bool IsFormattedAsIsbn(string s) =>
+    s.AsEnumerable().All(c => ValidChars.Contains(c)) && s.Length is 10 or 13;
 
-    return IsFormattedAsIsbn(isbn) ? new CheckedIsbn(isbn) : null;
-  }
+  public static CheckedIsbn? Create(string isbn) => IsFormattedAsIsbn(isbn) ? new CheckedIsbn(isbn) : null;
 }
 
 internal record struct ParsedJson(string Title) {
