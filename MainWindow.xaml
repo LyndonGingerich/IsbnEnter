@@ -27,7 +27,7 @@
       Grid.Column="1" 
       Grid.Row="0"
       Text="{Binding IsbnString, ElementName=This, UpdateSourceTrigger=PropertyChanged}"
-      KeyDown="WriteCsv" />
+      KeyDown="AdvanceToCallNumber" />
 
     <TextBlock Grid.Column="0" Grid.Row="1" Text="Call number" />
     <TextBox

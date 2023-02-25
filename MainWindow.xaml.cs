@@ -92,6 +92,11 @@ public partial class MainWindow {
     _csvWriter.Dispose();
     _streamWriter.Dispose();
   }
+
+  private void AdvanceToCallNumber(object sender, KeyEventArgs e) {
+    if (e.Key != Key.Enter) return;
+    Keyboard.Focus(CallNumberText);
+  }
 }
 
 internal readonly record struct CheckedIsbn {
