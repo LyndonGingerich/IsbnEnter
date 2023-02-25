@@ -79,7 +79,7 @@ public partial class MainWindow {
     var title = TitleText.Text;
     if (title == "") return;
 
-    _csvWriter.WriteRecord(new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value });
+    _csvWriter.WriteRecord(new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value, Title = title });
     _csvWriter.NextRecord();
 
     IsbnText.Text = "";
@@ -125,5 +125,8 @@ internal readonly record struct CsvEntry {
   public int CallNumber { get; init; }
 
   [Index(1)]
+  public string Title { get; init; }
+
+  [Index(2)]
   public string Isbn { get; init; }
 }
