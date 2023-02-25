@@ -27,18 +27,18 @@ public partial class MainWindow {
   }
 
   private string IsbnString {
-    get => (string)GetValue(IsbnStringProperty);
+    get => (string) GetValue(IsbnStringProperty);
     set => SetValue(IsbnStringProperty, value);
   }
 
   private CheckedIsbn? Isbn {
-    get => (CheckedIsbn?)GetValue(IsbnProperty);
+    get => (CheckedIsbn?) GetValue(IsbnProperty);
     set => SetValue(IsbnProperty, value);
   }
 
   private static async void CheckIsbn(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-    var window = (MainWindow)d;
-    var isbnString = (string)e.NewValue;
+    var window = (MainWindow) d;
+    var isbnString = (string) e.NewValue;
     if (CheckedIsbn.Create(isbnString) is not { } isbn) return;
     if (await ParseJson(isbn) is { } parsedJson) {
       window.Isbn = isbn;
@@ -55,7 +55,7 @@ public partial class MainWindow {
     var json = await HttpClient.GetStringAsync(url);
     return
       JsonNode.Parse(json) is { } node
-        ? new ParsedJson((string)((dynamic)node)["items"][0]["volumeInfo"]["title"])
+        ? new ParsedJson((string) ((dynamic) node)["items"][0]["volumeInfo"]["title"])
         : null;
   }
 
