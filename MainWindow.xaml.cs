@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -69,7 +68,7 @@ public partial class MainWindow {
     using (var writer = new StreamWriter("records.csv")) {
       using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
       var entry = new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value };
-      csv.WriteRecords(new List<CsvEntry> { entry });
+      csv.WriteRecord(entry);
     }
 
     IsbnText.Text = "";
