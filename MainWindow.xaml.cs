@@ -53,10 +53,9 @@ public partial class MainWindow {
   private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn) {
     var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn.Value;
     var json = await HttpClient.GetStringAsync(url);
-    return
-      JsonNode.Parse(json) is { } node
-        ? new ParsedJson((string) ((dynamic) node)["items"][0]["volumeInfo"]["title"])
-        : null;
+    if (JsonNode.Parse(json) is not { } node) return null;
+    if ((string?) ((dynamic) node)["items"]?[0]?["volumeInfo"]?["title"] is not { } title) return null;
+    return new ParsedJson(title);
   }
 
   private void WriteCsv(object sender, KeyEventArgs e) {
