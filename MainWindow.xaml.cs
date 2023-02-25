@@ -39,8 +39,8 @@ public partial class MainWindow {
   private static async void CheckIsbn(DependencyObject d, DependencyPropertyChangedEventArgs e) {
     var window = (MainWindow) d;
     var isbnString = (string) e.NewValue;
-    if (CheckedIsbn.Create(isbnString) is not { } isbn) return;
-    if (await ParseJson(isbn) is { } parsedJson) {
+    if (CheckedIsbn.Create(isbnString) is { } isbn
+        && await ParseJson(isbn) is { } parsedJson) {
       window.Isbn = isbn;
       window.TitleText.Text = parsedJson.Title;
     }
