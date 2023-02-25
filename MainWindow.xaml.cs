@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using CsvHelper;
+using CsvHelper.Configuration.Attributes;
 
 namespace IsbnEnter;
 
@@ -30,6 +31,7 @@ public partial class MainWindow {
     InitializeComponent();
     _streamWriter = new StreamWriter("records.csv");
     _csvWriter = new CsvWriter(_streamWriter, CultureInfo.InvariantCulture);
+    InitializeCsv();
   }
 
   private string IsbnString {
@@ -63,6 +65,8 @@ public partial class MainWindow {
     if ((string?) ((dynamic) node)["items"]?[0]?["volumeInfo"]?["title"] is not { } title) return null;
     return new ParsedJson(title);
   }
+
+  private void InitializeCsv() => _csvWriter.WriteHeader<CsvEntry>();
 
   private void WriteCsv(object sender, KeyEventArgs e) {
     if (e.Key != Key.Enter) return;
@@ -106,6 +110,9 @@ internal readonly record struct ParsedJson(string Title) {
 }
 
 internal readonly record struct CsvEntry {
+  [Index(0)]
   public int CallNumber { get; init; }
+
+  [Index(1)]
   public string Isbn { get; init; }
 }
