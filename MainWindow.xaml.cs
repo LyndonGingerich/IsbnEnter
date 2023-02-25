@@ -74,6 +74,8 @@ public partial class MainWindow {
 
     IsbnText.Text = "";
     CallNumberText.Text = "";
+
+    Keyboard.Focus(IsbnText);
   }
 }
 
