@@ -44,10 +44,12 @@ public partial class MainWindow {
         && await ParseJson(isbn) is { } parsedJson) {
       Isbn = isbn;
       TitleText.Text = parsedJson.Title;
+      AuthorsText.Text = parsedJson.Authors;
     }
     else {
       Isbn = null;
       TitleText.Text = "";
+      AuthorsText.Text = "";
     }
   }
 
@@ -56,7 +58,25 @@ public partial class MainWindow {
     var json = await HttpClient.GetStringAsync(url);
     if (JsonNode.Parse(json) is not { } node) return null;
     if ((string?) ((dynamic) node)["items"]?[0]?["volumeInfo"]?["title"] is not { } title) return null;
-    return new ParsedJson(title);
+    if ((JsonArray?) ((dynamic) node)["items"]?[0]?["volumeInfo"]?["authors"] is not { } authors) return null;
+    return new ParsedJson(title, FormatAuthors(authors));
+  }
+
+  private static string FormatAuthors(JsonArray authors) {
+    static string PlaceLastNameFirst(string input) {
+      var elements = input.Split(" ");
+      var ordered = elements.Take(elements.Length - 1).Prepend($"{elements.Last()},");
+      return string.Join(" ", ordered);
+    }
+
+    var names =
+      from name in
+        from name in authors
+        select name?.ToString()
+      where name is not null
+      select PlaceLastNameFirst(name);
+
+    return string.Join("; ", names);
   }
 
   private void InitializeCsv() {
@@ -91,7 +111,8 @@ public partial class MainWindow {
       return;
     }
 
-    var csvEntry = new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value, Title = title };
+    var csvEntry = new CsvEntry
+      { CallNumber = callNumber, Isbn = isbn.Value, Title = title, Authors = AuthorsText.Text };
     WriteSuccess(csvEntry);
 
     _csvWriter.WriteRecord(csvEntry);
@@ -105,7 +126,7 @@ public partial class MainWindow {
 
   private void WriteSuccess(CsvEntry entry) =>
     SuccessText.Text =
-      $"Saved:\nCall number: {entry.CallNumber}\nTitle: {entry.Title}\nIsbn: {entry.Isbn}";
+      $"Saved:\nCall number: {entry.CallNumber}\nTitle: {entry.Title}\nAuthors: {entry.Authors}\nIsbn: {entry.Isbn}";
 
   private void DisposeFileWriters(object? sender, EventArgs e) {
     _csvWriter.Dispose();
@@ -135,8 +156,9 @@ internal readonly record struct CheckedIsbn {
   public static CheckedIsbn? Create(string isbn) => IsFormattedAsIsbn(isbn) ? new CheckedIsbn(isbn) : null;
 }
 
-internal readonly record struct ParsedJson(string Title) {
+internal readonly record struct ParsedJson(string Title, string Authors) {
   public string Title { get; } = Title;
+  public string Authors { get; } = Authors;
 }
 
 internal readonly record struct CsvEntry {
@@ -147,5 +169,8 @@ internal readonly record struct CsvEntry {
   public string Title { get; init; }
 
   [Index(2)]
+  public string Authors { get; init; }
+
+  [Index(3)]
   public string Isbn { get; init; }
 }
