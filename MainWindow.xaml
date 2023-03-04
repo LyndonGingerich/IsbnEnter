@@ -45,10 +45,11 @@
     <TextBox
       x:Name="TitleText"
       Grid.Column="1"
-      Grid.Row="3" />
+      Grid.Row="3"
+      KeyDown="WriteCsv" />
 
     <TextBlock Grid.Column="0" Grid.Row="4" Text="Author" />
-    <TextBox x:Name="AuthorsText" Grid.Column="1" Grid.Row="4" />
+    <TextBox x:Name="AuthorsText" Grid.Column="1" Grid.Row="4" KeyDown="WriteCsv" />
 
     <TextBlock Grid.Column="0" Grid.Row="6" Text="Success" />
     <TextBlock x:Name="SuccessText" Grid.Column="1" Grid.Row="6" Foreground="Green" />
