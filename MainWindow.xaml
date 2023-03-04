@@ -42,5 +42,8 @@
       x:Name="TitleText"
       Grid.Column="1"
       Grid.Row="2" />
+
+    <TextBlock Grid.Column="0" Grid.Row="3" Text="Error" />
+    <TextBox x:Name="ErrorText" Grid.Column="1" Grid.Row="3" Foreground="Red" />
   </Grid>
 </Window>
