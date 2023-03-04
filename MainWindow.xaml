@@ -24,6 +24,8 @@
       <RowDefinition Height="16" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="16" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
     <TextBlock Grid.Column="0" Grid.Row="0" Text="ISBN" />
@@ -56,5 +58,11 @@
 
     <TextBlock Grid.Column="0" Grid.Row="7" Text="Error" />
     <TextBlock x:Name="ErrorText" Grid.Column="1" Grid.Row="7" Foreground="Red" />
+
+    <Button
+      Grid.Column="0"
+      Grid.Row="9"
+      Content="Write without validating ISBN"
+      Click="WriteWithoutValidating" />
   </Grid>
 </Window>

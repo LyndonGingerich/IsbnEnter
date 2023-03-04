@@ -87,6 +87,10 @@ public partial class MainWindow {
   private void WriteCsv(object sender, KeyEventArgs e) {
     if (e.Key != Key.Enter) return;
 
+    WriteCsv();
+  }
+
+  private void WriteCsv() {
     if (!int.TryParse(CallNumberText.Text, out var callNumber)) {
       ErrorText.Text =
         CallNumberText.Text == ""
@@ -120,6 +124,8 @@ public partial class MainWindow {
 
     IsbnText.Text = "";
     CallNumberText.Text = "";
+    TitleText.Text = "";
+    AuthorsText.Text = "";
 
     Keyboard.Focus(IsbnText);
   }
@@ -139,6 +145,12 @@ public partial class MainWindow {
   }
 
   private void FocusIsbnText(object sender, RoutedEventArgs e) => Keyboard.Focus(IsbnText);
+
+  private void WriteWithoutValidating(object sender, RoutedEventArgs e) {
+    const string blankIsbn = "[None]";
+    Isbn = CheckedIsbn.CreateWithoutValidating(IsbnText.Text == "" ? blankIsbn : IsbnText.Text);
+    WriteCsv();
+  }
 }
 
 internal readonly record struct CheckedIsbn {
@@ -154,6 +166,7 @@ internal readonly record struct CheckedIsbn {
     s.AsEnumerable().All(c => ValidChars.Contains(c)) && s.Length is 10 or 13;
 
   public static CheckedIsbn? Create(string isbn) => IsFormattedAsIsbn(isbn) ? new CheckedIsbn(isbn) : null;
+  public static CheckedIsbn CreateWithoutValidating(string isbn) => new(isbn);
 }
 
 internal readonly record struct ParsedJson(string Title, string Authors) {
