@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using CsvHelper;
+using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 
 namespace IsbnEnter;
@@ -27,7 +28,8 @@ public partial class MainWindow {
   public MainWindow() {
     InitializeComponent();
     _streamWriter = new StreamWriter("records.csv");
-    _csvWriter = new CsvWriter(_streamWriter, CultureInfo.InvariantCulture);
+    var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture) { Delimiter = "|" };
+    _csvWriter = new CsvWriter(_streamWriter, csvConfig);
     InitializeCsv();
   }
 
