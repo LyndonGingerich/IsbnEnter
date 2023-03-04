@@ -64,11 +64,25 @@ public partial class MainWindow {
 
   private void WriteCsv(object sender, KeyEventArgs e) {
     if (e.Key != Key.Enter) return;
-    if (!int.TryParse(CallNumberText.Text, out var callNumber)) return;
-    if (Isbn is not { } isbn) return;
+
+    if (!int.TryParse(CallNumberText.Text, out var callNumber)) {
+      ErrorText.Text =
+        CallNumberText.Text == ""
+          ? "No call number specified."
+          : $"{CallNumberText.Text} is not a valid integer.";
+      return;
+    }
+
+    if (Isbn is not { } isbn) {
+      ErrorText.Text = $"No book found with ISBN {IsbnText.Text}.";
+      return;
+    }
 
     var title = TitleText.Text;
-    if (title == "") return;
+    if (title == "") {
+      ErrorText.Text = "No title specified.";
+      return;
+    }
 
     _csvWriter.WriteRecord(new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value, Title = title });
     _csvWriter.NextRecord();
