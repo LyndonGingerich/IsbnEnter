@@ -12,20 +12,20 @@
         Loaded="FocusIsbnText">
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition/>
-      <ColumnDefinition/>
+      <ColumnDefinition />
+      <ColumnDefinition />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
 
-    <TextBlock Grid.Column="0" Grid.Row="0" Text="ISBN"/>
-    <TextBox 
+    <TextBlock Grid.Column="0" Grid.Row="0" Text="ISBN" />
+    <TextBox
       x:Name="IsbnText"
-      Grid.Column="1" 
+      Grid.Column="1"
       Grid.Row="0"
       Text="{Binding IsbnString, ElementName=This, UpdateSourceTrigger=PropertyChanged}"
       KeyDown="AdvanceToCallNumber" />
