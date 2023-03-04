@@ -84,7 +84,10 @@ public partial class MainWindow {
       return;
     }
 
-    _csvWriter.WriteRecord(new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value, Title = title });
+    var csvEntry = new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value, Title = title };
+    WriteSuccess(csvEntry);
+
+    _csvWriter.WriteRecord(csvEntry);
     _csvWriter.NextRecord();
 
     IsbnText.Text = "";
@@ -92,6 +95,10 @@ public partial class MainWindow {
 
     Keyboard.Focus(IsbnText);
   }
+
+  private void WriteSuccess(CsvEntry entry) =>
+    SuccessText.Text =
+      $"Saved:\nCall number: {entry.CallNumber}\nTitle: {entry.Title}\nIsbn: {entry.Isbn}";
 
   private void DisposeFileWriters(object? sender, EventArgs e) {
     _csvWriter.Dispose();
