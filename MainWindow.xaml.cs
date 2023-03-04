@@ -6,7 +6,6 @@ using System.Net.Http;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -38,10 +37,12 @@ public partial class MainWindow {
     set => SetValue(IsbnProperty, value);
   }
 
-  private async void CheckIsbn(object sender, TextChangedEventArgs e) {
-    var isbnString = ((TextBox) sender).Text;
+  private async void CheckIsbnEvent(object sender, RoutedEventArgs e) => await CheckIsbn();
+
+  private async Task CheckIsbn() {
+    var isbnString = IsbnText.Text;
     if (CheckedIsbn.Create(isbnString) is { } isbn
-        && await ParseJson(isbn) is { } parsedJson) {
+        && await ParseJson(isbn, !AuthorIsOrganizationCheckBox.IsChecked ?? false) is { } parsedJson) {
       Isbn = isbn;
       TitleText.Text = parsedJson.Title;
       AuthorsText.Text = parsedJson.Authors;
@@ -51,16 +52,18 @@ public partial class MainWindow {
       CallNumberText.Text = "";
       TitleText.Text = "";
       AuthorsText.Text = "";
+      AuthorIsOrganizationCheckBox.IsChecked = false;
     }
   }
 
-  private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn) {
+  private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn, bool formatAuthors) {
     var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn.Value;
     var json = await HttpClient.GetStringAsync(url);
     if (JsonNode.Parse(json) is not { } node) return null;
     if ((string?) ((dynamic) node)["items"]?[0]?["volumeInfo"]?["title"] is not { } title) return null;
     if ((JsonArray?) ((dynamic) node)["items"]?[0]?["volumeInfo"]?["authors"] is not { } authors) return null;
-    return new ParsedJson(title, FormatAuthors(authors));
+    var authorsString = formatAuthors ? FormatAuthors(authors) : authors[0]?.GetValue<string>() ?? "[None]";
+    return new ParsedJson(title, authorsString);
   }
 
   private static string FormatAuthors(JsonArray authors) {
@@ -127,6 +130,7 @@ public partial class MainWindow {
     CallNumberText.Text = "";
     TitleText.Text = "";
     AuthorsText.Text = "";
+    AuthorIsOrganizationCheckBox.IsChecked = false;
 
     Keyboard.Focus(IsbnText);
   }
