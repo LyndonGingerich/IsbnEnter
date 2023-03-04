@@ -49,11 +49,15 @@ public partial class MainWindow {
     }
     else {
       Isbn = null;
-      CallNumberText.Text = "";
-      TitleText.Text = "";
-      AuthorsText.Text = "";
-      AuthorIsOrganizationCheckBox.IsChecked = false;
+      ClearFields();
     }
+  }
+
+  private void ClearFields() {
+    CallNumberText.Text = "";
+    TitleText.Text = "";
+    AuthorsText.Text = "";
+    AuthorIsOrganizationCheckBox.IsChecked = false;
   }
 
   private static async Task<ParsedJson?> ParseJson(CheckedIsbn isbn, bool formatAuthors) {
@@ -127,10 +131,7 @@ public partial class MainWindow {
     _csvWriter.NextRecord();
 
     IsbnText.Text = "";
-    CallNumberText.Text = "";
-    TitleText.Text = "";
-    AuthorsText.Text = "";
-    AuthorIsOrganizationCheckBox.IsChecked = false;
+    ClearFields();
 
     Keyboard.Focus(IsbnText);
   }
