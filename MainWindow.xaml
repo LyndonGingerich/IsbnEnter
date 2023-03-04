@@ -18,7 +18,9 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="16" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="16" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
     </Grid.RowDefinitions>
@@ -38,16 +40,16 @@
       Grid.Row="1"
       KeyDown="WriteCsv" />
 
-    <TextBlock Grid.Column="0" Grid.Row="2" Text="Title" />
+    <TextBlock Grid.Column="0" Grid.Row="3" Text="Title" />
     <TextBlock
       x:Name="TitleText"
       Grid.Column="1"
-      Grid.Row="2" />
+      Grid.Row="3" />
 
-    <TextBlock Grid.Column="0" Grid.Row="3" Text="Error" />
-    <TextBlock x:Name="ErrorText" Grid.Column="1" Grid.Row="3" Foreground="Red" />
+    <TextBlock Grid.Column="0" Grid.Row="5" Text="Success" />
+    <TextBlock x:Name="SuccessText" Grid.Column="1" Grid.Row="5" Foreground="Green" />
 
-    <TextBlock Grid.Column="0" Grid.Row="4" Text="Success" />
-    <TextBlock x:Name="SuccessText" Grid.Column="1" Grid.Row="4" Foreground="Green" />
+    <TextBlock Grid.Column="0" Grid.Row="6" Text="Error" />
+    <TextBlock x:Name="ErrorText" Grid.Column="1" Grid.Row="6" Foreground="Red" />
   </Grid>
 </Window>
