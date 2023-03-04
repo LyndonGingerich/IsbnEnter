@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using CsvHelper;
 using CsvHelper.Configuration.Attributes;
@@ -14,10 +15,6 @@ namespace IsbnEnter;
 
 public partial class MainWindow {
   private static readonly HttpClient HttpClient = new();
-
-  public static readonly DependencyProperty IsbnStringProperty =
-    DependencyProperty.Register(
-      nameof(IsbnString), typeof(string), typeof(MainWindow), new PropertyMetadata(CheckIsbn));
 
   public static readonly DependencyProperty IsbnProperty =
     DependencyProperty.Register(
@@ -34,27 +31,21 @@ public partial class MainWindow {
     InitializeCsv();
   }
 
-  private string IsbnString {
-    get => (string) GetValue(IsbnStringProperty);
-    set => SetValue(IsbnStringProperty, value);
-  }
-
   private CheckedIsbn? Isbn {
     get => (CheckedIsbn?) GetValue(IsbnProperty);
     set => SetValue(IsbnProperty, value);
   }
 
-  private static async void CheckIsbn(DependencyObject d, DependencyPropertyChangedEventArgs e) {
-    var window = (MainWindow) d;
-    var isbnString = (string) e.NewValue;
+  private async void CheckIsbn(object sender, TextChangedEventArgs e) {
+    var isbnString = ((TextBox) sender).Text;
     if (CheckedIsbn.Create(isbnString) is { } isbn
         && await ParseJson(isbn) is { } parsedJson) {
-      window.Isbn = isbn;
-      window.TitleText.Text = parsedJson.Title;
+      Isbn = isbn;
+      TitleText.Text = parsedJson.Title;
     }
     else {
-      window.Isbn = null;
-      window.TitleText.Text = "";
+      Isbn = null;
+      TitleText.Text = "";
     }
   }
 
