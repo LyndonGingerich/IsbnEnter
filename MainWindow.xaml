@@ -20,6 +20,7 @@
       <RowDefinition Height="Auto" />
       <RowDefinition Height="16" />
       <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
       <RowDefinition Height="16" />
       <RowDefinition Height="Auto" />
       <RowDefinition Height="Auto" />
@@ -46,10 +47,13 @@
       Grid.Column="1"
       Grid.Row="3" />
 
-    <TextBlock Grid.Column="0" Grid.Row="5" Text="Success" />
-    <TextBlock x:Name="SuccessText" Grid.Column="1" Grid.Row="5" Foreground="Green" />
+    <TextBlock Grid.Column="0" Grid.Row="4" Text="Author" />
+    <TextBlock x:Name="AuthorsText" Grid.Column="1" Grid.Row="4" />
 
-    <TextBlock Grid.Column="0" Grid.Row="6" Text="Error" />
-    <TextBlock x:Name="ErrorText" Grid.Column="1" Grid.Row="6" Foreground="Red" />
+    <TextBlock Grid.Column="0" Grid.Row="6" Text="Success" />
+    <TextBlock x:Name="SuccessText" Grid.Column="1" Grid.Row="6" Foreground="Green" />
+
+    <TextBlock Grid.Column="0" Grid.Row="7" Text="Error" />
+    <TextBlock x:Name="ErrorText" Grid.Column="1" Grid.Row="7" Foreground="Red" />
   </Grid>
 </Window>

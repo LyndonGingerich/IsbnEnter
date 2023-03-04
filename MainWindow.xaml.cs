@@ -84,6 +84,11 @@ public partial class MainWindow {
       return;
     }
 
+    if (AuthorsText.Text == "") {
+      ErrorText.Text = "No authors specified.";
+      return;
+    }
+
     var csvEntry = new CsvEntry { CallNumber = callNumber, Isbn = isbn.Value, Title = title };
     WriteSuccess(csvEntry);
 
