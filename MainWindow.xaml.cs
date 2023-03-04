@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -156,6 +157,11 @@ public partial class MainWindow {
     const string blankIsbn = "[None]";
     Isbn = CheckedIsbn.CreateWithoutValidating(IsbnText.Text == "" ? blankIsbn : IsbnText.Text);
     WriteCsv();
+  }
+
+  private void CheckNumericInput(object sender, TextCompositionEventArgs e) {
+    var isTextAllowed = new Regex("[^0-9]+").IsMatch(e.Text);
+    e.Handled = isTextAllowed;
   }
 }
 

@@ -42,7 +42,8 @@
       x:Name="CallNumberText"
       Grid.Column="2"
       Grid.Row="1"
-      KeyDown="WriteCsv" />
+      KeyDown="WriteCsv"
+      PreviewTextInput="CheckNumericInput" />
 
     <TextBlock Grid.Column="0" Grid.Row="3" Text="Title" />
     <TextBox
