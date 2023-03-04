@@ -48,6 +48,7 @@ public partial class MainWindow {
     }
     else {
       Isbn = null;
+      CallNumberText.Text = "";
       TitleText.Text = "";
       AuthorsText.Text = "";
     }
