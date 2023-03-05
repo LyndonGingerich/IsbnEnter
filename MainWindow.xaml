@@ -11,6 +11,14 @@
         Closed="DisposeFileWriters"
         Loaded="FocusIsbnText">
   <Grid>
+    <Grid.Resources>
+      <Style TargetType="TextBlock">
+        <Setter Property="ToolTip" Value="{Binding Text, RelativeSource={RelativeSource Self}}" />
+      </Style>
+      <Style TargetType="TextBox">
+        <Setter Property="ToolTip" Value="{Binding Text, RelativeSource={RelativeSource Self}}" />
+      </Style>
+    </Grid.Resources>
     <Grid.ColumnDefinitions>
       <ColumnDefinition />
       <ColumnDefinition />
