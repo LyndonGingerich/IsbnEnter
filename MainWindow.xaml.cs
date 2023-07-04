@@ -72,12 +72,6 @@ public partial class MainWindow {
   }
 
   private static string FormatAuthors(JsonArray authors) {
-    static string PlaceLastNameFirst(string input) {
-      var elements = input.Split(" ");
-      var ordered = elements.Take(elements.Length - 1).Prepend($"{elements.Last()},");
-      return string.Join(" ", ordered);
-    }
-
     var names =
       from name in
         from name in authors
@@ -86,6 +80,12 @@ public partial class MainWindow {
       select PlaceLastNameFirst(name);
 
     return string.Join("; ", names);
+
+    static string PlaceLastNameFirst(string input) {
+      var elements = input.Split(" ");
+      var ordered = elements.Take(elements.Length - 1).Prepend($"{elements.Last()},");
+      return string.Join(" ", ordered);
+    }
   }
 
   private void InitializeCsv() {
